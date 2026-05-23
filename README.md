@@ -32,7 +32,18 @@
         }
 .card{background:#141b2d;border:1px solid #30363d;border-radius:10px;padding:18px;margin-bottom:15px}
 input,select{width:100%;padding:12px;margin:8px 0;background:#0d1117;border:1px solid #30363d;color:#e0e6ed;border-radius:6px;font-size:1rem}
-button{width:100%;padding:14px;background:#00ff88;color:#0a0e1a;border:none;border-radius:6px;font-weight:bold;font-size:1rem;margin-top:10px;cursor:pointer}
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: #00ff88 !important; /* Forces the neon green background */
+    color: #0a0e1a !important;            /* Forces dark text for clear readability */
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10px;
+    cursor: pointer;
+}      
 .result{background:#0d1117;padding:12px;margin-top:12px;border-radius:6px;display:none}
 .result-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #21262d}
 .result-row:last-child{border:none}

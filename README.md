@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="coinzilla-site-verification" content="cf4c34419594134612a143a1302134cc">
-<title>BOT Chain Pulse | CaryPact Calculator</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#0a0e1a;color:#e0e6ed;padding:10px;max-width:900px;margin:0 auto;line-height:1.5}
-h1{color:#00ff88;text-align:center;font-size:1.6rem;margin:20px 0}
-h2{color:#00ff88;font-size:1.1rem;margin-top:25px;border-bottom:1px solid #00ff88;padding-bottom:8px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="coinzilla-site-verification" content="YOUR_CODE_HERE">
+    <title>BOT Chain Pulse | CaryPact Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d1117; /* Matches your dark theme */
+            color: #e0e6ed;
+            line-height: 1.5;
+            padding: 15px; /* Adds nice spacing on mobile screens */
+        }
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #00ff88;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            padding-bottom: 8px;
+        }
 .card{background:#141b2d;border:1px solid #30363d;border-radius:10px;padding:18px;margin-bottom:15px}
 input,select{width:100%;padding:12px;margin:8px 0;background:#0d1117;border:1px solid #30363d;color:#e0e6ed;border-radius:6px;font-size:1rem}
 button{width:100%;padding:14px;background:#00ff88;color:#0a0e1a;border:none;border-radius:6px;font-weight:bold;font-size:1rem;margin-top:10px;cursor:pointer}

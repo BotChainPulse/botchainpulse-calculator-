@@ -196,18 +196,39 @@ document.getElementById('sAPY').textContent=(apr*365*100).toFixed(1)+'%';
 document.getElementById('sRes').style.display='block';
 }
 
+ var vLv = {
+   0: { i: 0, w: 0, m: 0 },
+   1: { i: 500, w: 10000, m: 1200 },
+   2: { i: 1000, w: 30000, m: 3000 },
+   3: { i: 1500, w: 80000, m: 7000 },
+   4: { i: 2000, w: 200000, m: 16000 },
+   5: { i: 3000, w: 500000, m: 40000 },
+   6: { i: 4000, w: 1600000, m: 135000 },
+   7: { i: 5000, w: 5000000, m: 360000 },
+   8: { i: 10000, w: 15000000, m: 900000 },
+   9: { i: 15000, w: 45000000, m: 2400000 },
+  10: { i: 20000, w: 135000000, m: 6000000 }
+ }
 function calcV(){
 var c=parseInt(document.getElementById('vCur').value);
 var t=parseInt(document.getElementById('vTgt').value);
 var vol=parseFloat(document.getElementById('vVol').value)||0;
-var cv=vLv[c],tv=vLv[t];
-if(t<=c){
-document.getElementById('vInv').textContent='At target';
-document.getElementById('vWL').textContent='-';
-document.getElementById('vTime').textContent='-';
-document.getElementById('vCurR').textContent='$'+cv.m.toLocaleString()+'/mo';
-document.getElementById('vTgtR').textContent='$'+tv.m.toLocaleString()+'/mo';
-document.getElementById('vROI').textContent='-';
+  var cv = vLv[c];
+    var tv = vLv[t];
+
+    if (!cv || !tv) return;
+
+    var add = Math.max(0, tv.i - cv.i);
+    var wl = Math.max(0, tv.w - vol);
+    var time = (t >= 8) ? "Needs 2x line structural tier" : (wl > 0 ? (vol > 0 ? `${(wl / vol).toFixed(1)} Months` : "Requires Growth") : "Immediate");
+    var targetDaily = tv.m / 30;
+    var roi = (add > 0 && targetDaily > 0) ? Math.ceil(add / targetDaily) : 0;
+    document.getElementById('vInv').textContent = '$' + add.toLocaleString();
+    document.getElementById('vWL').textContent = wl > 0 ? '$' + wl.toLocaleString() : '-';
+    document.getElementById('vTime').textContent = time;
+    document.getElementById('vCurR').textContent = '$' + cv.m.toLocaleString() + '/Mo';
+    document.getElementById('vTgtR').textContent = '$' + tv.m.toLocaleString() + '/Mo';
+    document.getElementById('vROI').textContent='-';
 return;
 }
 var add=tv.i-cv.i,wl=tv.w>0?tv.w-cv.w:0;

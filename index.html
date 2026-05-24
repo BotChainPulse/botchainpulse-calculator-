@@ -209,41 +209,60 @@ document.getElementById('sRes').style.display='block';
    9: { i: 15000, w: 45000000, m: 2400000 },
   10: { i: 20000, w: 135000000, m: 6000000 }
  }
+
 function calcV(){
- var c=parseInt(document.getElementById('vCur').value);
-var t=parseInt(document.getElementById('vTgt').value);
-var vol=parseFloat(document.getElementById('vVol').value)||0;
-var cv = vLv[c],tv = vLv[t];
-  
+    // 1. Fetch values safely from your live inputs
+    var c = parseInt(document.getElementById('vCur')?.value) || 0;
+    
+    // Checks for your target element or automatically picks the next level up
+    var tgtEl = document.getElementById('vTgt') || document.getElementById('sLock');
+    var t = tgtEl ? (parseInt(tgtEl.value) || 0) : Math.min(10, c + 1);
+    
+    // Checks for your volume element (supports vVol or mVol if renamed)
+    var volEl = document.getElementById('vVol') || document.getElementById('mVol');
+    var vol = volEl ? (parseFloat(volEl.value) || 0) : 0;
+
+    var cv = vLv[c];
+    var tv = vLv[t];
+
     if (!cv || !tv) return;
-  
+
+    // 2. Clear out calculations if target tier is less than or equal to current tier
+    if (t <= c) {
+        if(document.getElementById('vInv')) document.getElementById('vInv').textContent = 'At target';
+        if(document.getElementById('vWL')) document.getElementById('vWL').textContent = '—';
+        if(document.getElementById('vTime')) document.getElementById('vTime').textContent = '—';
+        if(document.getElementById('vCurR')) document.getElementById('vCurR').textContent = '$' + cv.m.toLocaleString() + '/mo';
+        if(document.getElementById('vTgtR')) document.getElementById('vTgtR').textContent = '$' + tv.m.toLocaleString() + '/mo';
+        if(document.getElementById('vROI')) document.getElementById('vROI').textContent = '—';
+        return;
+    }
+
+    // 3. Compute structural upgrades
     var add = Math.max(0, tv.i - cv.i);
     var wl = Math.max(0, tv.w - vol);
-  
-    var time = (t >= 8) ? "Needs 2x line structural tier" : (wl > 0 ? (vol > 0 ? `${(wl / vol).toFixed(1)} Months` : "Requires Growth") : "Immediate");
- 
+    
+    // Handle time evaluation rule thresholds
+    var time = "";
+    if (tv.w === 0) {
+        time = "Needs 2x line structural tier";
+    } else if (wl > 0 && vol > 0) {
+        time = Math.ceil(wl / vol) + " months";
+    } else {
+        time = "Immediate";
+    }
+    
     var targetDaily = tv.m / 30;
-    var roi = (add > 0 && targetDaily > 0) ? Math.ceil(add / targetDaily) : 0;
-  
-    document.getElementById('vInv').textContent = '$' + add.toLocaleString();
-    document.getElementById('vWL').textContent = wl > 0 ? '$' + wl.toLocaleString() : '-';
-    document.getElementById('vTime').textContent = time;
-    document.getElementById('vCurR').textContent = '$' + cv.m.toLocaleString() + '/Mo';
-    document.getElementById('vTgtR').textContent = '$' + tv.m.toLocaleString() + '/Mo';
-    document.getElementById('vROI').textContent='-';
-return;
-}
-var add=tv.i-cv.i,wl=tv.w>0?tv.w-cv.w:0;
-var time=tv.w===0?'Needs 2x prev level':(wl>0&&vol>0?Math.ceil(wl/vol)+' months':'N/A');
-var roi=tv.m>0?(add/tv.m*30).toFixed(1):0;
-document.getElementById('vInv').textContent='$'+add.toLocaleString();
-document.getElementById('vWL').textContent=wl>0?wl.toLocaleString()+' U':(tv.w===0?'2x level':'None');
-document.getElementById('vTime').textContent=time;
-document.getElementById('vCurR').textContent='$'+cv.m.toLocaleString()+'/mo';
-document.getElementById('vTgtR').textContent='$'+tv.m.toLocaleString()+'/mo';
-document.getElementById('vROI').textContent=roi+' days';
-}
+    var roi = (targetDaily > 0) ? (add / targetDaily).toFixed(1) : 0;
 
+    // 4. Update elements safely across your page layouts
+    if(document.getElementById('vInv')) document.getElementById('vInv').textContent = '$' + add.toLocaleString();
+    if(document.getElementById('vWL')) document.getElementById('vWL').textContent = wl > 0 ? '$' + wl.toLocaleString() : '$0';
+    if(document.getElementById('vTime')) document.getElementById('vTime').textContent = time;
+    if(document.getElementById('vCurR')) document.getElementById('vCurR').textContent = '$' + cv.m.toLocaleString() + '/mo';
+    if(document.getElementById('vTgtR')) document.getElementById('vTgtR').textContent = '$' + tv.m.toLocaleString() + '/mo';
+    if(document.getElementById('vROI')) document.getElementById('vROI').textContent = roi > 0 ? roi + ' days' : '0 days';
+}
 calcV();
 setTimeout(function(){calcMine();calcStake();},100);
 </script>

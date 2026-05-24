@@ -210,19 +210,21 @@ document.getElementById('sRes').style.display='block';
   10: { i: 20000, w: 135000000, m: 6000000 }
  }
 function calcV(){
-var c=parseInt(document.getElementById('vCur').value);
+ var c=parseInt(document.getElementById('vCur').value);
 var t=parseInt(document.getElementById('vTgt').value);
 var vol=parseFloat(document.getElementById('vVol').value)||0;
-  var cv = vLv[c];
-    var tv = vLv[t];
-
+var cv = vLv[c],tv = vLv[t];
+  
     if (!cv || !tv) return;
-
+  
     var add = Math.max(0, tv.i - cv.i);
     var wl = Math.max(0, tv.w - vol);
+  
     var time = (t >= 8) ? "Needs 2x line structural tier" : (wl > 0 ? (vol > 0 ? `${(wl / vol).toFixed(1)} Months` : "Requires Growth") : "Immediate");
+ 
     var targetDaily = tv.m / 30;
     var roi = (add > 0 && targetDaily > 0) ? Math.ceil(add / targetDaily) : 0;
+  
     document.getElementById('vInv').textContent = '$' + add.toLocaleString();
     document.getElementById('vWL').textContent = wl > 0 ? '$' + wl.toLocaleString() : '-';
     document.getElementById('vTime').textContent = time;

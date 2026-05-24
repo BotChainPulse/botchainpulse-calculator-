@@ -217,7 +217,26 @@ document.getElementById('sYr').textContent='$'+yr.toFixed(2);
 document.getElementById('sAPY').textContent=(apr*365*100).toFixed(1)+'%';
 document.getElementById('sRes').style.display='block';
 }
-
+205:    document.getElementById('mRes').style.display='block';
+206: }
+207: 
+208: var vLv = {
+209:     0: { i: 0, w: 0, m: 0 },
+210:     1: { i: 500, w: 10000, m: 1200 },
+211:     2: { i: 1000, w: 30000, m: 3000 },
+212:     3: { i: 1500, w: 80000, m: 7000 },
+213:     4: { i: 2000, w: 200000, m: 16000 },
+214:     5: { i: 3000, w: 500000, m: 40000 },
+215:     6: { i: 4000, w: 1600000, m: 135000 },
+216:     7: { i: 5000, w: 5000000, m: 360000 },
+217:     8: { i: 10000, w: 15000000, m: 900000 },
+218:     9: { i: 15000, w: 45000000, m: 2400000 },
+219:     10: { i: 20000, w: 135000000, m: 6000000 }
+220: };
+221: 
+222: function calcV(){
+223:    var c=parseInt(document.getElementById('vCur').value);
+224:    var t=parseInt(document.getElementById('vTgt').value);
 function calcV(){
 var c=parseInt(document.getElementById('vCur').value);
 var t=parseInt(document.getElementById('vTgt').value);
